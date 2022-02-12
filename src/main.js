@@ -9,8 +9,13 @@ var displayWindow = document.querySelector(".main-cover");
 var saveCoverBtn = document.querySelector(".save-cover-button");
 var homeBtn = document.querySelector(".home-button");
 var viewSavedCoversBtn = document.querySelector(".view-saved-button");
-var homeScreen = document.querySelector(".home-view")
-var favCovers = document.querySelector(".saved-view")
+var homeScreen = document.querySelector(".home-view");
+var favCovers = document.querySelector(".saved-view");
+var yourCover = document.querySelector(".user-cover");
+var yourTitle = document.querySelector(".user-title");
+var yourDes1 = document.querySelector(".user-desc1");
+var yourDes2 = document.querySelector(".user-desc2");
+var yourBookBtn = document.querySelector(".create-new-book-button");
 var savedCovers = [
   new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
@@ -20,6 +25,7 @@ randomCoverBtn.addEventListener("click", generateCoverImg);
 createPersonalCover.addEventListener("click", displayForm);
 viewSavedCoversBtn.addEventListener("click", displaySavedCovers);
 homeBtn.addEventListener("click", displayHome);
+yourBookBtn.addEventListener("click", creativeWriting);
 
   function show(object){
     object.classList.remove('hidden')
@@ -44,7 +50,18 @@ function displayForm(){
   hide(randomCoverBtn);
   hide(saveCoverBtn);
   show(homeBtn);
-}
+};
+
+function creativeWriting() {
+  event.preventDefault();
+  var cover = new Cover(yourCover.value, yourTitle.value, yourDes1.value, yourDes2.value);
+    savedCovers.push(cover);
+    movieImg.src = cover.cover;
+    movieTitle.innerText = cover.title;
+    movieDescription1.innerText = cover.tagline1;
+    movieDescription2.innerText = cover.tagline2;
+    displayHome();
+};
 
 function displaySavedCovers(){
   // for(var i = 0; i < savedCovers.length; i++){
