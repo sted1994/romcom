@@ -16,35 +16,47 @@ var yourTitle = document.querySelector(".user-title");
 var yourDes1 = document.querySelector(".user-desc1");
 var yourDes2 = document.querySelector(".user-desc2");
 var yourBookBtn = document.querySelector(".create-new-book-button");
-var savedCovers = [
-  new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
-];
+
+var currentCover = [];
+var savedCovers = [];
 
 window.addEventListener("load", generateCoverImg)
 randomCoverBtn.addEventListener("click", generateCoverImg);
 createPersonalCover.addEventListener("click", displayForm);
 viewSavedCoversBtn.addEventListener("click", displaySavedCovers);
 homeBtn.addEventListener("click", displayHome);
-yourBookBtn.addEventListener("click", creativeWriting);
+yourBookBtn.addEventListener("click", savePersonalCover);
+saveCoverBtn.addEventListener("click", saveCurrentCover);
 
-  function show(object){
-    object.classList.remove('hidden')
+function show(object) {
+  object.classList.remove('hidden')
+}
+
+function hide(object) {
+  object.classList.add('hidden')
+}
+
+function saveCurrentCover() {
+  if (!savedCovers.includes(currentCover[0])) {
+    savedCovers.unshift(currentCover[0]);
   }
+}
 
-  function hide(object){
-    object.classList.add('hidden')
-  }
-
-
-function generateCoverImg(){
+function generateCoverImg() {
   var randomCover = new Cover(covers[getRandomIndex(covers)], titles[getRandomIndex(titles)], descriptors[getRandomIndex(descriptors)], descriptors[getRandomIndex(descriptors)]);
-   movieImg.src = randomCover.cover;
-   movieTitle.innerText = randomCover.title;
-   movieDescription1.innerText = randomCover.tagline1;
-   movieDescription2.innerText = randomCover.tagline2;
+  movieImg.src = randomCover.cover;
+  movieTitle.innerText = randomCover.title;
+  movieDescription1.innerText = randomCover.tagline1;
+  movieDescription2.innerText = randomCover.tagline2;
+  currentCover.unshift(randomCover)
+
+  if (currentCover.length > 2) {
+    currentCover.pop();
+    console.log(currentCover);
+  }
 };
 
-function displayForm(){
+function displayForm() {
   hide(displayWindow);
   show(createForm);
   hide(randomCoverBtn);
@@ -52,38 +64,37 @@ function displayForm(){
   show(homeBtn);
 };
 
-function creativeWriting() {
-  event.preventDefault();
+function savePersonalCover() {
   var cover = new Cover(yourCover.value, yourTitle.value, yourDes1.value, yourDes2.value);
-    savedCovers.push(cover);
-    movieImg.src = cover.cover;
-    movieTitle.innerText = cover.title;
-    movieDescription1.innerText = cover.tagline1;
-    movieDescription2.innerText = cover.tagline2;
-    displayHome();
+  event.preventDefault();
+  savedCovers.push(cover);
+  movieImg.src = cover.cover;
+  movieTitle.innerText = cover.title;
+  movieDescription1.innerText = cover.tagline1;
+  movieDescription2.innerText = cover.tagline2;
+  displayHome();
 };
 
-function displaySavedCovers(){
-  // for(var i = 0; i < savedCovers.length; i++){
-  //   movieImg.src = savedCovers[i].cover;
-  //   movieTitle.innerText = savedCovers[i].title;
-  //   movieDescription1.innerText = savedCovers[i].tagline1;
-  //   movieDescription2.innerText = savedCovers[i].tagline2;
-  // }
-  hide(createForm)
-  hide(displayWindow);
+function displaySavedCovers() {
   hide(randomCoverBtn);
   hide(saveCoverBtn);
   show(homeBtn);
+  for (var i = 0; i < savedCovers.length; i++) {
+    movieImg.src = savedCovers[i].cover;
+    movieTitle.innerText = savedCovers[i].title;
+    movieDescription1.innerText = savedCovers[i].tagline1;
+    movieDescription2.innerText = savedCovers[i].tagline2;
+    show(displayWindow);
+  }
 }
 
-  function displayHome(){
-    show(displayWindow);
-    show(randomCoverBtn);
-    show(saveCoverBtn);
-    hide(homeBtn);
-    hide(createForm);
-    hide(favCovers);
+function displayHome() {
+  show(displayWindow);
+  show(randomCoverBtn);
+  show(saveCoverBtn);
+  hide(homeBtn);
+  hide(createForm);
+  hide(favCovers);
 }
 
 function getRandomIndex(array) {
