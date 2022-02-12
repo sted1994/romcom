@@ -10,12 +10,13 @@ var saveCoverBtn = document.querySelector(".save-cover-button");
 var homeBtn = document.querySelector(".home-button");
 var viewSavedCoversBtn = document.querySelector(".view-saved-button");
 var homeScreen = document.querySelector(".home-view");
-var favCovers = document.querySelector(".saved-view");
+var savedViewScreen = document.querySelector(".saved-view");
 var yourCover = document.querySelector(".user-cover");
 var yourTitle = document.querySelector(".user-title");
 var yourDes1 = document.querySelector(".user-desc1");
 var yourDes2 = document.querySelector(".user-desc2");
 var yourBookBtn = document.querySelector(".create-new-book-button");
+var savedCoversScreen = document.querySelector(".saved-covers-section")
 
 var currentCover = [];
 var savedCovers = [];
@@ -52,7 +53,6 @@ function generateCoverImg() {
 
   if (currentCover.length > 2) {
     currentCover.pop();
-    console.log(currentCover);
   }
 };
 
@@ -76,16 +76,23 @@ function savePersonalCover() {
 };
 
 function displaySavedCovers() {
+  savedCoversScreen.innerHTML = '';
   hide(randomCoverBtn);
   hide(saveCoverBtn);
   show(homeBtn);
+  hide(displayWindow);
   for (var i = 0; i < savedCovers.length; i++) {
-    movieImg.src = savedCovers[i].cover;
-    movieTitle.innerText = savedCovers[i].title;
-    movieDescription1.innerText = savedCovers[i].tagline1;
-    movieDescription2.innerText = savedCovers[i].tagline2;
-    show(displayWindow);
+    var currentCoverinstance = new Cover(savedCovers[i].cover, savedCovers[i].title, savedCovers[i].tagline1, savedCovers[i].tagline2)
+    savedCoversScreen.innerHTML += `
+      <section class="mini-cover">
+        <img class="cover-image" src="${currentCoverinstance.cover}">
+        <h2 class="cover-title">${currentCoverinstance.title}</h2>
+        <h3 class="tagline">A tale of <span class="tagline-1">${currentCoverinstance.tagline1}</span> and <span class="tagline-2">${currentCoverinstance.tagline2}</span></h3>
+        <img class="price-tag" src="./assets/price.png">
+        <img class="overlay" src="./assets/overlay.png">
+      </section>`
   }
+    show(savedViewScreen);
 }
 
 function displayHome() {
@@ -94,7 +101,7 @@ function displayHome() {
   show(saveCoverBtn);
   hide(homeBtn);
   hide(createForm);
-  hide(favCovers);
+  hide(savedViewScreen);
 }
 
 function getRandomIndex(array) {
