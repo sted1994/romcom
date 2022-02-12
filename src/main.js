@@ -28,6 +28,7 @@ viewSavedCoversBtn.addEventListener("click", displaySavedCovers);
 homeBtn.addEventListener("click", displayHome);
 yourBookBtn.addEventListener("click", savePersonalCover);
 saveCoverBtn.addEventListener("click", saveCurrentCover);
+savedCoversScreen.addEventListener("dblclick", deleteSavedCover);
 
 function show(object) {
   object.classList.remove('hidden')
@@ -35,6 +36,16 @@ function show(object) {
 
 function hide(object) {
   object.classList.add('hidden')
+}
+
+function deleteSavedCover(){
+  var idToDelete = parseInt(event.target.closest(".mini-cover").id)
+  for (var i = 0; i < savedCovers.length; i++){
+    if (savedCovers[i].id === idToDelete){
+      savedCovers.splice(i,1);
+      displaySavedCovers()
+    }
+  }
 }
 
 function saveCurrentCover() {
@@ -62,6 +73,7 @@ function displayForm() {
   hide(randomCoverBtn);
   hide(saveCoverBtn);
   show(homeBtn);
+  hide(savedViewScreen);
 };
 
 function savePersonalCover() {
@@ -81,10 +93,12 @@ function displaySavedCovers() {
   hide(saveCoverBtn);
   show(homeBtn);
   hide(displayWindow);
+  hide(createForm);
+  hide(viewSavedCoversBtn);
   for (var i = 0; i < savedCovers.length; i++) {
     var currentCoverinstance = new Cover(savedCovers[i].cover, savedCovers[i].title, savedCovers[i].tagline1, savedCovers[i].tagline2)
     savedCoversScreen.innerHTML += `
-      <section class="mini-cover">
+      <section class="mini-cover" id=${savedCovers[i].id}>
         <img class="cover-image" src="${currentCoverinstance.cover}">
         <h2 class="cover-title">${currentCoverinstance.title}</h2>
         <h3 class="tagline">A tale of <span class="tagline-1">${currentCoverinstance.tagline1}</span> and <span class="tagline-2">${currentCoverinstance.tagline2}</span></h3>
