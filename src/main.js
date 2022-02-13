@@ -81,7 +81,6 @@ function displayForm() {
 function savePersonalCover() {
   var cover = new Cover(yourCover.value, yourTitle.value, yourDes1.value, yourDes2.value);
   event.preventDefault();
-  //savedCovers.push(cover);
   movieImg.src = cover.cover;
   movieTitle.innerText = cover.title;
   movieDescription1.innerText = cover.tagline1;
