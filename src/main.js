@@ -74,16 +74,23 @@ function displayForm() {
   hide(saveCoverBtn);
   show(homeBtn);
   hide(savedViewScreen);
+  hide(createPersonalCover);
+  show(viewSavedCoversBtn);
 };
 
 function savePersonalCover() {
   var cover = new Cover(yourCover.value, yourTitle.value, yourDes1.value, yourDes2.value);
   event.preventDefault();
-  savedCovers.push(cover);
+  //savedCovers.push(cover);
   movieImg.src = cover.cover;
   movieTitle.innerText = cover.title;
   movieDescription1.innerText = cover.tagline1;
   movieDescription2.innerText = cover.tagline2;
+
+  covers.unshift(cover.cover);
+  titles.unshift(cover.title);
+  descriptors.unshift(cover.tagline1);
+  descriptors.unshift(cover.tagline2);
   displayHome();
 };
 
@@ -95,6 +102,7 @@ function displaySavedCovers() {
   hide(displayWindow);
   hide(createForm);
   hide(viewSavedCoversBtn);
+  show(createPersonalCover);
   for (var i = 0; i < savedCovers.length; i++) {
     var currentCoverinstance = new Cover(savedCovers[i].cover, savedCovers[i].title, savedCovers[i].tagline1, savedCovers[i].tagline2)
     savedCoversScreen.innerHTML += `
@@ -116,6 +124,7 @@ function displayHome() {
   hide(homeBtn);
   hide(createForm);
   hide(savedViewScreen);
+  show(viewSavedCoversBtn);
 }
 
 function getRandomIndex(array) {
