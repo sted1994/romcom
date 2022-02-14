@@ -51,8 +51,6 @@ function generateCoverImg() {
   }
 };
 ```
-Project free sampling can be found: [here](file:///Users/byggbddbndyct274/tak2/mRomCom/romcom/index.html)
-(Warning: the Free sample does not reflect the finished product)
 
 ## `Installation`
 
